@@ -42,12 +42,10 @@ CREATE TABLE cards
 INSERT INTO boards VALUES (1, 'Board 1');
 INSERT INTO boards VALUES (2, 'Board 2');
 
-
 INSERT INTO statuses VALUES (0, 'new');
 INSERT INTO statuses VALUES (1, 'in progress');
 INSERT INTO statuses VALUES (2, 'testing');
 INSERT INTO statuses VALUES (3,'done');
-
 
 INSERT INTO cards VALUES (1, 1, 'New card 1', 0, 0);
 INSERT INTO cards VALUES (2, 1, 'New card 2', 0, 1);
