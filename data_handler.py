@@ -20,7 +20,6 @@ def get_boards():
 
 
 def get_cards_for_board(board_id):
-    persistence.clear_cache()
     all_cards = persistence.get_cards()
     matching_cards = []
     for card in all_cards:
