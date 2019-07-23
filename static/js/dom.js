@@ -24,6 +24,7 @@ export let dom = {
         // retrieves boards and makes showBoards called
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
+            dom.hideLoadingText();
         });
     },
     showBoards: function (boards) {
@@ -40,7 +41,7 @@ export let dom = {
                         <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                     </div>
                     <div class="board-columns">
-                                     
+                        
                     </div>
                 </section>
             `;
@@ -52,7 +53,11 @@ export let dom = {
             </div>
         `;
 
-        this._appendToElement(document.querySelector('#boards'), outerHtml);
+        this._appendToElement(document.querySelector('body'), outerHtml);
+    },
+    hideLoadingText: function () {
+        let loadingElement = document.querySelector('#boards');
+        loadingElement.remove();
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
