@@ -25,6 +25,7 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
             dom.hideLoadingText();
+            dom.addRenameListeners();
         });
     },
     showBoards: function (boards) {
@@ -58,6 +59,24 @@ export let dom = {
     hideLoadingText: function () {
         let loadingElement = document.querySelector('#boards');
         loadingElement.remove();
+    },
+    addRenameListeners: function () {
+        let titleElements = document.querySelectorAll('.board-title');
+        for (let titleElement of titleElements) {
+            titleElement.addEventListener('click', dom.renameHandler);
+        }
+    },
+    renameHandler: function (event) {
+        let titleField = event.currentTarget;
+        let title = titleField.textContent;
+        titleField.textContent = '';
+
+        let renameTemplate = document.getElementById('rename-template');
+        const renameForm = document.importNode(renameTemplate.content, true);
+        let input = renameForm.querySelector('.new-title');
+        input.setAttribute('value', title);
+
+        titleField.appendChild(renameForm);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
