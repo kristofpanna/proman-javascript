@@ -63,7 +63,7 @@ export let dom = {
     addRenameListeners: function () {
         let titleElements = document.querySelectorAll('.board-title');
         for (let titleElement of titleElements) {
-            titleElement.addEventListener('click', dom.renameHandler);
+            titleElement.addEventListener('click', dom.renameHandler );
         }
     },
     renameHandler: function (event) {
@@ -77,6 +77,7 @@ export let dom = {
         input.setAttribute('value', title);
 
         titleField.appendChild(renameForm);
+        titleField.removeEventListener('click', dom.renameHandler);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
