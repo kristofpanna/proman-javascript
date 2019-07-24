@@ -33,10 +33,16 @@ def get_cards_for_board(board_id: int):
     """
     return data_handler.get_cards_for_board(board_id)
 
-@app.route('/add-board', methods=['GET'])
+@app.route('/add-board')
 def add_board():
 
     persistence.add_board()
+    return redirect('/')
+
+@app.route('/delete-board/<board_id>')
+def delete_board(board_id):
+
+    persistence.delete_board(board_id)
     return redirect('/')
 
 

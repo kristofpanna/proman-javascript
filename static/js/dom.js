@@ -39,6 +39,11 @@ export let dom = {
                     <div class="board-header"><span class="board-title">${board.title}</span>
                         <button class="board-add">Add Card</button>
                         <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                       
+                        <a class="board-delete" href="/delete-board/${ board.id }">
+                            <input class="board-toggle" type="submit" value="Delete"/>
+                        </a>
+                                       
                     </div>
                     <div class="board-columns">
                         

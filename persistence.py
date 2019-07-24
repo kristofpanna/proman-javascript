@@ -35,3 +35,18 @@ def add_board(cursor):
 
                     })
 
+@connection.connection_handler
+def delete_from_table_by_id(cursor, id, input_table):
+    cursor.execute(
+        sql.SQL("""
+                DELETE FROM {table}
+                WHERE id = %(id)s;""").format(table=sql.Identifier(input_table)),
+                {'id': id})
+
+@connection.connection_handler
+def delete_board(cursor, id):
+    cursor.execute("""
+                DELETE FROM boards
+                WHERE id = %(id)s;
+                """,
+                {'id': id})

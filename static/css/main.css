@@ -65,6 +65,12 @@ section.board{
     cursor: pointer;
 }
 
+.delete-button{
+            float: right;
+            display: block;
+            margin-top: -30px;
+        }
+
 .board-toggle{
     float: right;
     margin: 13px;
