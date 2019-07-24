@@ -59,6 +59,12 @@ section.board{
     display: inline-block;
 }
 
+.board-add-new{
+
+    margin: 20px;
+    cursor: pointer;
+}
+
 .board-toggle{
     float: right;
     margin: 13px;
