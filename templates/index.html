@@ -30,10 +30,16 @@
 <button class="board-add-new" onclick="window.location.href='{{ url_for('add_board') }}';" type="button">Add NEW Board</button>
 
 <div id="boards">
-
-
-
+    <p>Boards are loading...</p>
 </div>
 
+
+<template id="rename-template">
+    <form id="rename">
+        <input class="id" type="hidden" name="id" value="">
+        <input class="new-title" type="text" name="new-title" value="">
+        <button type="submit" name="Submit">Save</button>
+    </form>
+</template>
 </body>
 </html>

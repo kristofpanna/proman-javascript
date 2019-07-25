@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, jsonify
+from flask import Flask, render_template, url_for, request
 from util import json_response
 
 import data_handler
@@ -44,6 +45,13 @@ def delete_board(board_id):
 
     persistence.delete_board(board_id)
     return redirect('/')
+
+@app.route('/rename-board', methods=['POST'])
+def rename_board():
+    title = request.json['title']
+    board_id = request.json['board_id']
+    data_handler.rename_board(board_id, title)
+    return 'OK'
 
 
 def main():

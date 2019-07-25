@@ -26,6 +26,7 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
             dom.hideLoadingText();
+            dom.addRenameListeners();
         });
     },
     makeBoard: function (board) {
@@ -79,6 +80,70 @@ export let dom = {
         let loadingElement = document.querySelector('#boards');
         loadingElement.remove();
     },
+    addRenameListeners: function () {
+        let titleElements = document.querySelectorAll('.board-title');
+        for (let titleElement of titleElements) {
+            titleElement.addEventListener('click', dom.renameHandler);
+        }
+    },
+    renameHandler: function (event) {
+        let titleField = event.currentTarget;
+        let title = titleField.textContent;
+        titleField.textContent = '';
+        let boardId = titleField.dataset.boardid;
+        let renameForm = dom.createForm(boardId, title);
+        titleField.appendChild(renameForm);
+        titleField.removeEventListener('click', dom.renameHandler);
+        let form = titleField.querySelector("#rename");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            let textarea = event.target;
+            let data = {'board_id': textarea.querySelector('.id').value, 'title' : textarea.querySelector('.new-title').value}
+            dom.sendData(data);
+            let input = textarea.querySelector('.new-title');
+            let newTitle = input.value;
+            textarea.outerHTML = newTitle;
+        });
+
+    },
+    createForm: function (id, defaultText) {
+        let renameTemplate = document.getElementById('rename-template');
+        const renameForm = document.importNode(renameTemplate.content, true);
+        let input = renameForm.querySelector('.new-title');
+        let hiddenInput = renameForm.querySelector('.id');
+        hiddenInput.setAttribute('value', id);
+        input.setAttribute('value', defaultText);
+        return renameForm;
+    },
+    /*saveRename: function (event) {
+        event.preventDefault();
+        let form = event.target;
+        dom.sendData(form);
+    },*/
+    sendData: function (data) {
+        let XHR = new XMLHttpRequest();
+        let jsonData = JSON.stringify(data);
+        XHR.addEventListener("load", function (event) {
+            alert(jsonData);
+        });
+        XHR.addEventListener("error", function (event) {
+            alert('Sorry, could not save this.');
+        });
+        XHR.open("POST", '/rename-board', );
+        XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        XHR.send(jsonData);
+    },
+
+loadCards: function (boardId) {
+    // retrieves cards and makes showCards called
+},
+showCards: function (cards) {
+    // shows the cards of a board
+    // it adds necessary event listeners also
+}
+// here comes more features
+}
+;
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
         dataHandler.getCardsByBoardId(boardId, function (cards) {
