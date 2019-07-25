@@ -96,7 +96,7 @@ export let dom = {
             titleField.appendChild(renameForm);
             titleField.removeEventListener('click', dom.renameHandler);
             let form = titleField.querySelector("#rename");
-            form.addEventListener("submit", dom.saveRename (event) );
+            form.addEventListener("submit", dom.saveRename );
         },
         saveRename: function (event) {
               event.preventDefault();
