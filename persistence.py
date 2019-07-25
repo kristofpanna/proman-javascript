@@ -1,3 +1,5 @@
+from psycopg2 import sql
+
 import connection
 
 
@@ -50,3 +52,12 @@ def delete_board(cursor, id):
                 WHERE id = %(id)s;
                 """,
                 {'id': id})
+
+
+@connection.connection_handler
+def get_status_by_status_id(cursor, status_id):
+    cursor.execute("""
+                SELECT title FROM statuses
+                WHERE id = %(id)s;
+                """, {'id': status_id})
+    return cursor.fetchone()["title"]

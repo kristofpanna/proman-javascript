@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, jsonify
 from util import json_response
 
 import data_handler
@@ -25,13 +25,13 @@ def get_boards():
 
 
 @app.route("/get-cards/<int:board_id>")
-@json_response
+#@json_response
 def get_cards_for_board(board_id: int):
     """
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    return data_handler.get_cards_for_board(board_id)
+    return jsonify(data_handler.get_cards_for_board(board_id))
 
 @app.route('/add-board')
 def add_board():
