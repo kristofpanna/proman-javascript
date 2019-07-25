@@ -103,7 +103,8 @@ export let dom = {
                     'board_id': textarea.querySelector('.id').value,
                     'title': textarea.querySelector('.new-title').value
                 }
-                dom.sendData(data);
+                let url = '/rename-board';
+                dataHandler.sendData(data, url);
                 let input = textarea.querySelector('.new-title');
                 let newTitle = input.value;
                 textarea.outerHTML = newTitle;
@@ -118,17 +119,6 @@ export let dom = {
             hiddenInput.setAttribute('value', id);
             input.setAttribute('value', defaultText);
             return renameForm;
-        },
-        sendData: function (data) {
-            let XHR = new XMLHttpRequest();
-            let jsonData = JSON.stringify(data);
-
-            XHR.addEventListener("error", function (event) {
-                alert('Sorry, could not save this.');
-            });
-            XHR.open("POST", '/rename-board',);
-            XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            XHR.send(jsonData);
         },
         loadCards: function (boardId) {
             // retrieves cards and makes showCards called
