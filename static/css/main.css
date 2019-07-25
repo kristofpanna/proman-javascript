@@ -44,6 +44,11 @@ section.board{
     border-radius: 3px;
 }
 
+a {color: #fff;}         /* Unvisited link  */
+a:visited {color:#00FF00;} /* Visited link    */
+a:hover {color: #fffc00;}   /* Mouse over link */
+a:active {color:#0000FF;}  /* Selected link   */
+
 .board-header{
     height: 50px;
     background: #fff;

@@ -34,8 +34,7 @@ export let dom = {
             let boardHtml = `
                 <section class="board" data-boardid="${board.id}">
                     <div class="board-header"><span class="board-title" data-boardid="${board.id}">${board.title}</span>
-                        <a href="/add-card/${board.id}" >add carte ${board.id}</a> 
-                        <button class="board-add-new" onclick="window.location.href='{{ url_for('add_card') }}';" type="button">Add Card</button>
+                        <button class="board-add-new" type="button"><a href="/add-card/${board.id}" >Add Card</a> </button>
                         
                         <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                         <a class="board-delete" href="/delete-board/${board.id}">
