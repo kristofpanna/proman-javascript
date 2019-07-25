@@ -75,14 +75,14 @@ export let dom = {
         titleField.appendChild(renameForm);
         titleField.removeEventListener('click', dom.renameHandler);
         let form = titleField.querySelector("#rename");
-        form.addEventListener("submit", function (event, titleField) {
+        form.addEventListener("submit", function (event) {
             event.preventDefault();
-            let textarea = event.target
-            let dataform = textarea.querySelector('form');
-            dom.sendData(dataform);
+            let textarea = event.target;
+            let data = {'board_id': textarea.querySelector('.id').value, 'title' : textarea.querySelector('.new-title').value}
+            dom.sendData(data);
             let input = textarea.querySelector('.new-title');
             let newTitle = input.value;
-            textarea.innerHTML = newTitle;
+            textarea.outerHTML = newTitle;
         });
 
     },
@@ -100,18 +100,18 @@ export let dom = {
         let form = event.target;
         dom.sendData(form);
     },*/
-    sendData: function (dataform) {
+    sendData: function (data) {
         let XHR = new XMLHttpRequest();
-        let dataFromForm = new FormData(dataform);
+        let jsonData = JSON.stringify(data);
         XHR.addEventListener("load", function (event) {
-            alert('Saved!');
-            dataform.removeEventListener("submit", dom.saveRename);
+            alert(jsonData);
         });
         XHR.addEventListener("error", function (event) {
             alert('Sorry, could not save this.');
         });
-        XHR.open("POST", '/rename-board');
-        XHR.send(dataFromForm);
+        XHR.open("POST", '/rename-board', );
+        XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        XHR.send(jsonData);
     },
 
 loadCards: function (boardId) {
