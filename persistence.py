@@ -12,7 +12,8 @@ def get_statuses(cursor):
 @connection.connection_handler
 def get_boards(cursor):
     cursor.execute("""
-        SELECT * FROM boards;
+        SELECT * FROM boards
+        ORDER BY id;
     """)
     return cursor.fetchall()
 
@@ -23,3 +24,11 @@ def get_cards(cursor):
         SELECT * FROM cards;
     """)
     return cursor.fetchall()
+
+@connection.connection_handler
+def rename_board(cursor, board_id, new_title):
+    cursor.execute("""
+     UPDATE boards
+                SET title = %(new_title)s
+                WHERE id = %(board_id)s;
+    """, {'new_title': new_title, 'board_id': board_id})
