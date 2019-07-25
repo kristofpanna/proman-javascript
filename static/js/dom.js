@@ -121,9 +121,7 @@ export let dom = {
         sendData: function (data) {
             let XHR = new XMLHttpRequest();
             let jsonData = JSON.stringify(data);
-            XHR.addEventListener("load", function (event) {
-                alert(jsonData);
-            });
+
             XHR.addEventListener("error", function (event) {
                 alert('Sorry, could not save this.');
             });
