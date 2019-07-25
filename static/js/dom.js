@@ -96,20 +96,17 @@ export let dom = {
             titleField.appendChild(renameForm);
             titleField.removeEventListener('click', dom.renameHandler);
             let form = titleField.querySelector("#rename");
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-                let textarea = event.target;
+            form.addEventListener("submit", dom.saveRename (event) );
+        },
+        saveRename: function (event) {
+              event.preventDefault();
+                let form = event.target;
                 let data = {
-                    'board_id': textarea.querySelector('.id').value,
-                    'title': textarea.querySelector('.new-title').value
+                    'board_id': form.querySelector('.id').value,
+                    'title': form.querySelector('.new-title').value
                 }
-                let url = '/rename-board';
-                dataHandler.sendData(data, url);
-                let input = textarea.querySelector('.new-title');
-                let newTitle = input.value;
-                textarea.outerHTML = newTitle;
-            });
-
+                dataHandler.sendData(data, '/rename-board');
+                form.outerHTML= form.querySelector('.new-title').value;
         },
         createForm: function (id, defaultText) {
             let renameTemplate = document.getElementById('rename-template');
