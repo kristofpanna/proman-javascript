@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from util import json_response
 
 import data_handler
@@ -34,6 +34,9 @@ def get_cards_for_board(board_id: int):
 
 @app.route('/rename-board', methods=['POST'])
 def rename_board():
+    title = request.json['title']
+    board_id = request.json['board_id']
+    data_handler.rename_board(board_id, title)
     return 'OK'
 
 
