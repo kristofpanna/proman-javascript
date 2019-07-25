@@ -34,7 +34,21 @@ def add_board(cursor):
                       INSERT INTO boards (title)
                       VALUES (%(title)s);
                        """,
-                   {"title": "Board"
+                   {"title": "New Board"
+
+                    })
+
+@connection.connection_handler
+def add_card(cursor, data):
+    cursor.execute("""
+                      INSERT INTO cards (title, board_id, status_id, _order, archived )
+                      VALUES (%(title)s, %(board_id)s, %(status_id)s, %(order)s, %(archived)s);
+                       """,
+                   {"title": "New card",
+                    "board_id": data,
+                    "status_id": 0,
+                    "order": 0,
+                    "archived": False
 
                     })
 
@@ -50,6 +64,14 @@ def delete_from_table_by_id(cursor, id, input_table):
 def delete_board(cursor, id):
     cursor.execute("""
                 DELETE FROM boards
+                WHERE id = %(id)s;
+                """,
+                {'id': id})
+
+@connection.connection_handler
+def delete_card(cursor, id):
+    cursor.execute("""
+                DELETE FROM cards
                 WHERE id = %(id)s;
                 """,
                 {'id': id})

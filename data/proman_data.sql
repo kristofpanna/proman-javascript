@@ -60,5 +60,10 @@ INSERT INTO cards VALUES (10, 2, 'Planning', 2, 0);
 INSERT INTO cards VALUES (11, 2, 'Done card 1', 3, 0);
 INSERT INTO cards VALUES (12, 2, 'Done card 1', 3, 1);
 
+SELECT setval('boards_id_seq', 2, true);
+SELECT setval('cards_id_seq', 12, true);
+
+
+
 
 

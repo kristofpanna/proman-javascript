@@ -40,10 +40,22 @@ def add_board():
     persistence.add_board()
     return redirect('/')
 
+@app.route('/add-card/<board_id>')
+def add_card(board_id):
+
+    persistence.add_card(board_id)
+    return redirect('/')
+
 @app.route('/delete-board/<board_id>')
 def delete_board(board_id):
 
     persistence.delete_board(board_id)
+    return redirect('/')
+
+@app.route('/delete-card/<card_id>')
+def delete_card(card_id):
+
+    persistence.delete_card(card_id)
     return redirect('/')
 
 @app.route('/rename-board', methods=['POST'])

@@ -34,7 +34,9 @@ export let dom = {
             let boardHtml = `
                 <section class="board" data-boardid="${board.id}">
                     <div class="board-header"><span class="board-title" data-boardid="${board.id}">${board.title}</span>
-                        <button class="board-add">Add Card</button>
+                        <a href="/add-card/${board.id}" >add carte ${board.id}</a> 
+                        <button class="board-add-new" onclick="window.location.href='{{ url_for('add_card') }}';" type="button">Add Card</button>
+                        
                         <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                         <a class="board-delete" href="/delete-board/${board.id}">
                             <input class="board-toggle" type="submit" value="Delete"/>
@@ -144,7 +146,7 @@ export let dom = {
                 let column = board.querySelector(`[data-status="${statusText}"]`);
                 let columnContent = column.querySelector(`.board-column-content`);
                 card = `<div class="card">
-                        <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                        <div class="card-remove"><a class="fas fa-trash-alt" href="/delete-card/${card.id}"></a></div>
                         <div class="card-title">${card.title}</div>
                     </div>`;
                 this._appendToElement(columnContent, card);
