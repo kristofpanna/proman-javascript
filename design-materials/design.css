@@ -66,13 +66,15 @@ section.board{
 }
 
 .board-columns{
-    display: flex;
+    display: none;
     flex-wrap: nowrap;
+;
 }
 
 .board-column{
     padding: 10px;
     flex: 1;
+
 }
 
 .board-column-content{

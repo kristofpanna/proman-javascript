@@ -19,6 +19,19 @@ export let dataHandler = {
     _api_post: function (url, data, callback) {
         // it is not called from outside
         // sends the data to the API, and calls callback function
+        let XHR = new XMLHttpRequest();
+            let jsonData = JSON.stringify(data);
+            if (callback != null) {
+                XHR.addEventListener("load", function (event) {
+                    callback();
+                });
+            }
+            XHR.addEventListener("error", function (event) {
+                alert('Sorry, could not send this.');
+            });
+            XHR.open("POST", url);
+            XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            XHR.send(jsonData);
     },
     init: function () {
     },
@@ -59,14 +72,6 @@ export let dataHandler = {
     },
     // here comes more features
        sendData: function (data, url) {
-            let XHR = new XMLHttpRequest();
-            let jsonData = JSON.stringify(data);
-
-            XHR.addEventListener("error", function (event) {
-                alert('Sorry, could not save this.');
-            });
-            XHR.open("POST", url);
-            XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            XHR.send(jsonData);
+         dataHandler._api_post(url, data);
         },
 };
