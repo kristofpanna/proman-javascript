@@ -30,3 +30,7 @@ def get_cards_for_board(board_id):
 
 def rename_board(board_id, title):
     persistence.rename_board(board_id, title)
+
+
+def update_status(card_id, status):
+    persistence.update_status(card_id, status)

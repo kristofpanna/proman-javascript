@@ -115,3 +115,12 @@ def get_hashed_password_for_user(cursor, username):
     result = cursor.fetchone()
     return result['password']
 
+
+@connection.connection_handler
+def update_status(cursor, card_id, status_id):
+    cursor.execute("""
+        UPDATE cards
+        SET status_id = %(status_id)s
+        WHERE id=%(card_id)s;
+    """, {"status_id": status_id, "card_id": card_id})
+

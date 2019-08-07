@@ -68,6 +68,14 @@ def rename_board():
     return 'OK'
 
 
+@app.route('/update-status', methods=['POST'])
+def update_status():
+    card_id = request.json['id']
+    status = request.json['status']
+    data_handler.update_status(card_id, status)
+    return 'OK'
+
+
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == 'POST':

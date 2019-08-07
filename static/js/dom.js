@@ -2,7 +2,7 @@
 import {dataHandler} from "./data_handler.js";
 
 export let dom = {
-    statuses: ['new', 'in progress', 'testing', 'done'],
+    statuses: {0: 'new', 1:'in progress', 2:'testing', 3:'done'},
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
         // function to append new DOM elements (represented by a string) to an existing DOM element
         let fakeDiv = document.createElement('div');
@@ -70,10 +70,10 @@ export let dom = {
                     </div>
                     <div class="board-columns">`;
         // columns
-        for (let status of dom.statuses) {
+        for (let [status_id, status] of Object.entries(dom.statuses)) {
             boardHtml += `<div class="board-column" data-status="${status}">
                 <div class="board-column-title">${status}</div>
-                <div class="board-column-content"></div>
+                <div class="board-column-content" data-statusid="${status_id}"></div>
             </div>`;
         }
         // board end
@@ -174,7 +174,7 @@ export let dom = {
             let statusText = card.status;
             let column = board.querySelector(`[data-status="${statusText}"]`);
             let columnContent = column.querySelector(`.board-column-content`);
-            card = `<div class="card">
+            card = `<div class="card" data-id="${card.id}">
                         <div class="card-remove"><a class="fas fa-trash-alt" href="/delete-card/${card.id}"></a></div>
                         <div class="card-title">${card.title}</div>
                     </div>`;
@@ -186,7 +186,10 @@ export let dom = {
         for (const boardColumnsContainer of boardColumnsContainers) {
             const boardColumns = boardColumnsContainer.querySelectorAll('.board-column-content');
             const columnsArray = Array.from(boardColumns);
-            dragula(columnsArray);
+            dragula(columnsArray).on('drop', function (card) {
+                const data = {'id': card.dataset.id, 'status': card.parentNode.dataset.statusid};
+                dataHandler.sendData(data, '/update-status');
+            });
         }
     }
 };
