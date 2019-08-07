@@ -63,6 +63,22 @@ INSERT INTO cards VALUES (12, 2, 'Done card 1', 3, 1);
 SELECT setval('boards_id_seq', 2, true);
 SELECT setval('cards_id_seq', 12, true);
 
+DROP TABLE IF EXISTS public.users;
+CREATE TABLE users (
+  user_id serial NOT NULL PRIMARY KEY,
+  username text NOT NULL UNIQUE,
+  creation_date timestamp without time zone,
+  password text NOT NULL
+);
+
+ALTER TABLE ONLY public.question
+ADD user_id integer REFERENCES users(user_id) ON DELETE SET NULL;
+
+ALTER TABLE ONLY public.answer
+ADD user_id integer REFERENCES users(user_id) ON DELETE SET NULL;
+
+ALTER TABLE ONLY public.comment
+ADD user_id integer REFERENCES users(user_id) ON DELETE SET NULL;
 
 
 
