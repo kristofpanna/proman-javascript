@@ -53,6 +53,7 @@ export let dom = {
             dom.hideLoadingText();
             dom.addRenameListeners();
             dom.addToggleListeners();
+            dom.addDragAndDrop();
         });
     },
     makeBoard: function (board) {
@@ -178,6 +179,14 @@ export let dom = {
                         <div class="card-title">${card.title}</div>
                     </div>`;
             this._appendToElement(columnContent, card);
+        }
+    },
+    addDragAndDrop: function () {
+        const boardColumnsContainers = document.querySelectorAll('.board-columns');
+        for (const boardColumnsContainer of boardColumnsContainers) {
+            const boardColumns = boardColumnsContainer.querySelectorAll('.board-column-content');
+            const columnsArray = Array.from(boardColumns);
+            dragula(columnsArray);
         }
     }
 };
