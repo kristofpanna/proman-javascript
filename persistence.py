@@ -1,6 +1,7 @@
 from psycopg2 import sql
 
 import connection
+import util
 
 
 @connection.connection_handler
@@ -92,3 +93,25 @@ def rename_board(cursor, board_id, new_title):
                 SET title = %(new_title)s
                 WHERE id = %(board_id)s;
     """, {'new_title': new_title, 'board_id': board_id})
+
+
+@connection.connection_handler
+def add_new_user(cursor, data):
+    cursor.execute("""
+                        INSERT INTO users (username,  password)
+                        VALUES (%(username)s, %(password)s);
+                       """,
+                   {"username": data["username"],
+
+                    "password": util.hash_password(data["password"])})
+
+@connection.connection_handler
+def get_hashed_password_for_user(cursor, username):
+    cursor.execute("""
+                   SELECT password FROM users
+                   WHERE username = %(username)s 
+                   """,
+                   {'username': username})
+    result = cursor.fetchone()
+    return result['password']
+
