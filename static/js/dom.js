@@ -96,19 +96,33 @@ export let dom = {
             titleField.appendChild(renameForm);
             titleField.removeEventListener('click', dom.renameHandler);
             let form = titleField.querySelector("#rename");
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-                let textarea = event.target;
-                let data = {
-                    'board_id': textarea.querySelector('.id').value,
-                    'title': textarea.querySelector('.new-title').value
-                }
-                dom.sendData(data);
-                let input = textarea.querySelector('.new-title');
-                let newTitle = input.value;
-                textarea.outerHTML = newTitle;
-            });
+            document.querySelector('body').addEventListener('click', dom.restore);
 
+            form.addEventListener("submit", dom.saveRename );
+
+        },
+        restore: function (event){
+            let form = document.querySelector('#rename');
+            if (event.target() != form) {
+                let title = form.querySelector('newTitle')
+                form.outerHTML = title;
+                document.querySelector('body').removeEventListener('click', function (event) {
+                    titleField.addEventListener('click', dom.renameHandler)
+                });
+            }
+
+        },
+        saveRename: function (event) {
+              event.preventDefault();
+                let form = event.target;
+                let parent = form.parentElement;
+                let data = {
+                    'board_id': form.querySelector('.id').value,
+                    'title': form.querySelector('.new-title').value
+                }
+                dataHandler.sendData(data, '/rename-board');
+                form.outerHTML= form.querySelector('.new-title').value;
+                parent.addEventListener('click', dom.renameHandler);
         },
         createForm: function (id, defaultText) {
             let renameTemplate = document.getElementById('rename-template');
@@ -118,17 +132,6 @@ export let dom = {
             hiddenInput.setAttribute('value', id);
             input.setAttribute('value', defaultText);
             return renameForm;
-        },
-        sendData: function (data) {
-            let XHR = new XMLHttpRequest();
-            let jsonData = JSON.stringify(data);
-
-            XHR.addEventListener("error", function (event) {
-                alert('Sorry, could not save this.');
-            });
-            XHR.open("POST", '/rename-board',);
-            XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            XHR.send(jsonData);
         },
         loadCards: function (boardId) {
             // retrieves cards and makes showCards called

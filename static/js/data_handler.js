@@ -56,6 +56,17 @@ export let dataHandler = {
     },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
-    }
+    },
     // here comes more features
+       sendData: function (data, url) {
+            let XHR = new XMLHttpRequest();
+            let jsonData = JSON.stringify(data);
+
+            XHR.addEventListener("error", function (event) {
+                alert('Sorry, could not save this.');
+            });
+            XHR.open("POST", url);
+            XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            XHR.send(jsonData);
+        },
 };
