@@ -183,3 +183,21 @@ a {
 .username-header{
             background-color: #b40085;
         }
+
+.comment-label, .username-label{
+            margin-top: 20px;
+            color: #177199;
+        }
+
+
+.registration-form{
+            margin-top: 80px;
+            width: 20%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+.username, .password{
+           border-radius:5px;
+           border:1px solid #177199;
+       }
