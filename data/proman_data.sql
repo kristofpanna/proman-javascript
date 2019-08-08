@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS public.cards;
+DROP TABLE IF EXISTS public.cards CASCADE;
 DROP SEQUENCE IF EXISTS public.cards_id_seq;
-DROP TABLE IF EXISTS public.statuses;
+DROP TABLE IF EXISTS public.statuses CASCADE;
 DROP SEQUENCE IF EXISTS public.statuses_id_seq;
-DROP TABLE IF EXISTS public.boards;
+DROP TABLE IF EXISTS public.boards CASCADE;
 DROP SEQUENCE IF EXISTS public.boards_id_seq;
-DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.users CASCADE;
 DROP SEQUENCE IF EXISTS public.users_id_seq;
 
 
@@ -18,8 +18,7 @@ CREATE TABLE users
 CREATE TABLE boards
 (
     id       serial NOT NULL PRIMARY KEY,
-    title    varchar,
-    owner_id integer REFERENCES users (id) ON DELETE CASCADE
+    title    varchar
 );
 
 CREATE TABLE statuses
@@ -47,23 +46,23 @@ INSERT INTO statuses VALUES (1, 'in progress');
 INSERT INTO statuses VALUES (2, 'testing');
 INSERT INTO statuses VALUES (3,'done');
 
-INSERT INTO cards VALUES (1, 1, 'New card 1', 0, 0);
-INSERT INTO cards VALUES (2, 1, 'New card 2', 0, 1);
-INSERT INTO cards VALUES (3, 1, 'In progress card 1', 1, 0);
-INSERT INTO cards VALUES (4, 1, 'Planning', 2, 0);
-INSERT INTO cards VALUES (5, 1, 'Done card 1', 3, 0);
-INSERT INTO cards VALUES (6, 1, 'Done card 1', 3, 1);
-INSERT INTO cards VALUES (7, 2, 'New card 1', 0, 0);
-INSERT INTO cards VALUES (8, 2, 'New card 2', 0, 1);
-INSERT INTO cards VALUES (9, 2, 'In progress card', 1, 0);
-INSERT INTO cards VALUES (10, 2, 'Planning', 2, 0);
-INSERT INTO cards VALUES (11, 2, 'Done card 1', 3, 0);
-INSERT INTO cards VALUES (12, 2, 'Done card 1', 3, 1);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (1, 'New card 1', 0, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (1, 'New card 2', 0, 1);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (1, 'In progress card 1', 1, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (1, 'Planning', 2, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (1, 'Done card 1', 3, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (1, 'Done card 1', 3, 1);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'New card 1', 0, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'New card 2', 0, 1);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'In progress card', 1, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'Planning', 2, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'Done card 1', 3, 0);
+INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'Done card 1', 3, 1);
 
 SELECT setval('boards_id_seq', 2, true);
 SELECT setval('cards_id_seq', 12, true);
 
-DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.users CASCADE;
 CREATE TABLE users (
   user_id serial NOT NULL PRIMARY KEY,
   username text NOT NULL UNIQUE,
@@ -71,15 +70,6 @@ CREATE TABLE users (
   password text NOT NULL
 );
 
-ALTER TABLE ONLY public.question
-ADD user_id integer REFERENCES users(user_id) ON DELETE SET NULL;
-
-ALTER TABLE ONLY public.answer
-ADD user_id integer REFERENCES users(user_id) ON DELETE SET NULL;
-
-ALTER TABLE ONLY public.comment
-ADD user_id integer REFERENCES users(user_id) ON DELETE SET NULL;
-
-
-
+ALTER TABLE ONLY public.boards
+ADD owner_id integer REFERENCES users(user_id) ON DELETE CASCADE;
 
