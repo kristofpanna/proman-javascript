@@ -18,7 +18,8 @@ CREATE TABLE users
 CREATE TABLE boards
 (
     id       serial NOT NULL PRIMARY KEY,
-    title    varchar
+    title    varchar,
+    owner_id integer REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE statuses
@@ -38,8 +39,8 @@ CREATE TABLE cards
 );
 
 
-INSERT INTO boards VALUES (1, 'Board 1');
-INSERT INTO boards VALUES (2, 'Board 2');
+INSERT INTO boards (title) VALUES ('Board 1');
+INSERT INTO boards (title) VALUES ('Board 2');
 
 INSERT INTO statuses VALUES (0, 'new');
 INSERT INTO statuses VALUES (1, 'in progress');
@@ -58,18 +59,3 @@ INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'In progress c
 INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'Planning', 2, 0);
 INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'Done card 1', 3, 0);
 INSERT INTO cards (board_id, title, status_id, _order) VALUES (2, 'Done card 1', 3, 1);
-
-SELECT setval('boards_id_seq', 2, true);
-SELECT setval('cards_id_seq', 12, true);
-
-DROP TABLE IF EXISTS public.users CASCADE;
-CREATE TABLE users (
-  user_id serial NOT NULL PRIMARY KEY,
-  username text NOT NULL UNIQUE,
-  creation_date timestamp without time zone,
-  password text NOT NULL
-);
-
-ALTER TABLE ONLY public.boards
-ADD owner_id integer REFERENCES users(user_id) ON DELETE CASCADE;
-
